@@ -1,0 +1,7 @@
+venv
+.env*
+!.env.sample
+__pycache__
+logs
+exports
+
