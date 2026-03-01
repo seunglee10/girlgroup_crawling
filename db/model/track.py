@@ -1,3 +1,8 @@
+from __future__ import annotations
+
+from datetime import datetime
+from typing import TYPE_CHECKING
+
 from sqlalchemy import (
     BigInteger,
     Date,
@@ -8,9 +13,11 @@ from sqlalchemy import (
     func,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from datetime import datetime
 
 from .base import Base
+
+if TYPE_CHECKING:
+    from .girl_group import GirlGroup
 
 
 class tracks(Base):
@@ -30,7 +37,7 @@ class tracks(Base):
         UniqueConstraint("girl_group_id", "track_name", name="uq_artist_track"),
     )
 
-    girl_group = relationship("GirlGroup", back_populates="track_list")
+    girl_group: Mapped[GirlGroup] = relationship(back_populates="track_list")
 
 
 class TrackListeningSnapshot(Base):
@@ -52,4 +59,4 @@ class TrackListeningSnapshot(Base):
         UniqueConstraint("snapshot_date", "track_id", name="uq_snapshot_track"),
     )
 
-    track = relationship("tracks")
+    track: Mapped[tracks] = relationship()
