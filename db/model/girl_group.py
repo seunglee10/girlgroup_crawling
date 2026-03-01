@@ -1,8 +1,15 @@
+from __future__ import annotations
+
+from datetime import datetime
+from typing import TYPE_CHECKING
+
 from sqlalchemy import BigInteger, Date, DateTime, ForeignKey, Integer, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from datetime import datetime
 
 from .base import Base
+
+if TYPE_CHECKING:
+    from .track import tracks
 
 
 class GirlGroup(Base):
@@ -27,6 +34,9 @@ class GirlGroup(Base):
         nullable=False,
     )
 
+    ranks: Mapped[list[GirlGroupRank]] = relationship(back_populates="girl_group")
+    track_list: Mapped[list[tracks]] = relationship(back_populates="girl_group")
+
 
 class GirlGroupRank(Base):
     __tablename__ = "girl_group_rank"
@@ -47,4 +57,4 @@ class GirlGroupRank(Base):
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
 
-    girl_group = relationship("GirlGroup", back_populates="ranks")
+    girl_group: Mapped[GirlGroup] = relationship(back_populates="ranks")

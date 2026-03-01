@@ -67,7 +67,7 @@ def export_artist_tracks_csv(artist_id: str, output_path: str) -> None:
 
 def main():
     artist_id = "6RHTUrRF63xao58xh9FXYJ"
-    export_artist_tracks_csv(artist_id, output_path=f"exports/tracks/{id}.csv")
+    export_artist_tracks_csv(artist_id, output_path=f"exports/tracks/{artist_id}.csv")
 
 
 if __name__ == "__main__":
