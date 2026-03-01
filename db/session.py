@@ -7,12 +7,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+_engine = None
+
 
 def get_engine():
+    global _engine
+    if _engine is not None:
+        return _engine
+
     db_url = os.getenv("DATABASE_URL")
     if not db_url:
         raise RuntimeError("DATABASE_URL is not set. Check your .env file.")
-    return create_engine(db_url, future=True)
+
+    _engine = create_engine(db_url, future=True)
+    return _engine
 
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=get_engine())
