@@ -1,11 +1,11 @@
 import csv
 from pathlib import Path
 
+from crawlers.spotify_api import SpotifyConfig, get_access_token, SpotifyClient
+
 from dotenv import load_dotenv
 
 load_dotenv()
-
-from crawlers.spotify_api import SpotifyConfig, get_access_token, SpotifyClient
 
 
 def export_artist_tracks_csv(artist_id: str, output_path: str) -> None:
